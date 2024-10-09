@@ -2,6 +2,8 @@ package com.tradecart.api.infrastructure.controller;
 
 import com.tradecart.api.application.service.deal.DealService;
 import com.tradecart.api.domain.model.Deal;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,9 @@ public class DealsController {
         this.service = service;
     }
 
+    @Operation(summary = "Get deal by id")
+    @ApiResponse(responseCode = "200", description = "Deal found")
+    @ApiResponse(responseCode = "404", description = "Deal not found")
     @GetMapping("/{id}")
     public ResponseEntity<Deal> getDealById(@PathVariable("id") long id) {
         Deal deal = service.getById(id);
@@ -25,6 +30,8 @@ public class DealsController {
         return ResponseEntity.ok(deal);
     }
 
+    @Operation(summary = "Create deal")
+    @ApiResponse(responseCode = "200", description = "Deal created")
     @PostMapping
     public ResponseEntity<Deal> create(Deal deal){
         try {
@@ -35,6 +42,9 @@ public class DealsController {
         }
     }
 
+    @Operation(summary = "Update deal")
+    @ApiResponse(responseCode = "200", description = "Deal updated")
+    @ApiResponse(responseCode = "404", description = "Deal not found")
     @PutMapping("/{id}")
     public ResponseEntity<Deal> update(@PathVariable("id") long id, @RequestBody Deal deal){
         try {

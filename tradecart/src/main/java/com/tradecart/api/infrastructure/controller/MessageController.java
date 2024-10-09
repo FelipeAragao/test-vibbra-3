@@ -4,6 +4,8 @@ import com.tradecart.api.application.service.bid.BidService;
 import com.tradecart.api.application.service.message.MessageService;
 import com.tradecart.api.domain.model.Bid;
 import com.tradecart.api.domain.model.Message;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,9 @@ public class MessageController {
         this.service = service;
     }
 
+    @Operation(summary = "Get deal by id")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "404", description = "Deal not found")
     @GetMapping("/{id}")
     public ResponseEntity<Message> getDealById(@PathVariable("id") long id) {
         try {
@@ -33,6 +38,9 @@ public class MessageController {
         }
     }
 
+    @Operation(summary = "Get messages by deal")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "404", description = "Deal not found")
     @GetMapping()
     public ResponseEntity<List<Message>> getByDeal(@PathVariable("id") long id) {
         try {
@@ -46,6 +54,8 @@ public class MessageController {
         }
     }
 
+    @Operation(summary = "Create message")
+    @ApiResponse(responseCode = "200", description = "OK")
     @PostMapping
     public ResponseEntity<Message> create(Message message){
         try {
@@ -56,6 +66,9 @@ public class MessageController {
         }
     }
 
+    @Operation(summary = "Update message")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "404", description = "Message not found")
     @PutMapping("/{id}")
     public ResponseEntity<Message> update(@PathVariable("id") long id, @RequestBody Message message){
         try {
